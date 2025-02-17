@@ -1,24 +1,29 @@
 <!-- Login -->
 
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h2>Login</h2>
-    {% with messages = get_flashed_messages(category_filter=["error"]) %}
-        {% if messages %}
-            <p style="color: red;">{{ messages[0] }}</p>
-        {% endif %}
-    {% endwith %}
+    <div class="container">
+        <h2>Login</h2>
 
-    <form method="POST">
-        Email: <input type="email" name="email" required><br>
-        Password: <input type="password" name="password" required><br>
-        <input type="submit" value="Login">
-    </form>
+        {% with messages = get_flashed_messages(category_filter=["error"]) %}
+            {% if messages %}
+                <p class="error">{{ messages[0] }}</p>
+            {% endif %}
+        {% endwith %}
 
-    <p>Don't have an account? <a href="{{ url_for('register') }}">Register Here</a></p>
+        <form method="POST">
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="submit" value="Login">
+        </form>
+
+        <p>Don't have an account? <a href="{{ url_for('register') }}">Register Here</a></p>
+    </div>
 </body>
 </html>
