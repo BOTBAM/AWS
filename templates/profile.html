@@ -1,0 +1,12 @@
+<!-- Profile -->
+
+<h1>Welcome, {{ user[1] }}</h1>
+<p>First Name: {{ user[3] }}</p>
+<p>Last Name: {{ user[4] }}</p>
+<p>Email: {{ user[5] }}</p>
+<p>Address: {{ user[6] }}</p>
+
+<form action="/upload" method="POST" enctype="multipart/form-data">
+    Upload File: <input type="file" name="file">
+    <input type="submit" value="Upload">
+</form>
