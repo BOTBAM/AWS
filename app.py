@@ -27,6 +27,7 @@ def init_db():
 init_db()
 
 
+
 # ---------- LOGIN PAGE (DEFAULT PAGE) ----------
 @app.route("/", methods=["GET", "POST"])
 def login():
@@ -46,6 +47,42 @@ def login():
             flash("Wrong email and/or password. Please try again.", "error")
 
     return render_template("login.html")
+
+
+
+# ---------- REGISTRATION PAGE ----------
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        firstname = request.form["firstname"]
+        lastname = request.form["lastname"]
+        email = request.form["email"]
+        address = request.form["address"]
+
+        with sqlite3.connect("database.db") as conn:
+            c = conn.cursor()
+            try:
+                c.execute("INSERT INTO users (username, password, firstname, lastname, email, address) VALUES (?, ?, ?, ?, ?, ?)",
+                    (username, password, firstname, lastname, email, address))
+                conn.commit()
+                return redirect(url_for("login"))
+            
+            except sqlite3.IntegrityError:
+                flash("Email alraedy registered. Try logging in.", "error")
+
+    return render_template("register.html")
+
+
+
+# ---------- LOGOUT ----------
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("login"))
+
+
 
 
 if __name__ == "__main__":
